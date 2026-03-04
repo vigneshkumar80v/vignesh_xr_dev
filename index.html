@@ -1,366 +1,529 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vignesh Kumar | Unity 3D & XR Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg: #090e1a; --card: #131d30; --accent: #00f0ff; --accent2: #7b5fff;
-      --text: #e8eaf6; --muted: #7a8aaa; --border: rgba(0,240,255,0.15);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Space Mono', monospace; overflow-x: hidden; }
-    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,240,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.04) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: 0; }
-    .orb { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; }
-    .orb1 { width: 500px; height: 500px; background: rgba(0,240,255,0.07); top: -100px; left: -100px; }
-    .orb2 { width: 400px; height: 400px; background: rgba(123,95,255,0.08); bottom: 10%; right: -100px; }
-    nav { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 18px 48px; background: rgba(9,14,26,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--accent); }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
-    .hero { position: relative; z-index: 1; min-height: 92vh; display: flex; align-items: center; padding: 80px 48px 60px; }
-    .hero-content { max-width: 750px; }
-    .hero-tag { display: inline-block; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 6px 14px; margin-bottom: 28px; animation: fadeUp 0.5s ease both; }
-    .hero-name { font-family: 'Syne', sans-serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 16px; animation: fadeUp 0.5s 0.1s ease both; }
-    .hero-name .line2 { -webkit-text-stroke: 1.5px var(--accent); color: transparent; display: block; }
-    .hero-title { font-size: 0.82rem; letter-spacing: 0.1em; color: var(--accent2); text-transform: uppercase; margin-bottom: 24px; animation: fadeUp 0.5s 0.15s ease both; }
-    .hero-desc { font-size: 0.88rem; line-height: 1.8; color: var(--muted); max-width: 500px; margin-bottom: 36px; animation: fadeUp 0.5s 0.2s ease both; }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp 0.5s 0.25s ease both; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
-    .btn-primary { background: var(--accent); color: var(--bg); font-weight: 700; }
-    .btn-primary:hover { background: #fff; }
-    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-    .stats-bar { position: relative; z-index: 1; display: flex; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .stat-item { flex: 1; padding: 28px 32px; border-right: 1px solid var(--border); text-align: center; }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--accent); display: block; }
-    .stat-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
-    section { position: relative; z-index: 1; padding: 80px 48px; }
-    .section-header { display: flex; align-items: baseline; gap: 18px; margin-bottom: 48px; }
-    .section-num { font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; }
-    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; }
-    .section-line { flex: 1; height: 1px; background: var(--border); }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2px; }
-    .skill-block { background: var(--card); padding: 24px; border: 1px solid var(--border); transition: border-color 0.2s; }
-    .skill-block:hover { border-color: var(--accent); }
-    .skill-block-icon { font-size: 1.3rem; margin-bottom: 10px; }
-    .skill-block-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; margin-bottom: 12px; color: var(--accent); text-transform: uppercase; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-    .skill-tag { font-size: 0.62rem; padding: 4px 9px; border: 1px solid rgba(255,255,255,0.1); color: var(--muted); }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2px; }
-    .project-card { background: var(--card); border: 1px solid var(--border); overflow: hidden; transition: border-color 0.3s; }
-    .project-card:hover { border-color: var(--accent); }
-    .project-card:hover .project-overlay { opacity: 1; }
-    .project-card:hover .yt-thumb { transform: scale(1.04); }
-    .project-thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #0a1020; }
-    .yt-thumb { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .yt-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0f1726 0%, #1a2540 100%); font-size: 2.8rem; }
-    .project-overlay { position: absolute; inset: 0; background: rgba(0,240,255,0.12); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; text-decoration: none; }
-    .play-btn { width: 52px; height: 52px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .play-btn svg { fill: var(--bg); margin-left: 4px; }
-    .project-badge { position: absolute; top: 10px; right: 10px; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 9px; background: var(--accent2); color: white; }
-    .project-body { padding: 22px; }
-    .project-platform { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 7px; }
-    .project-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 9px; line-height: 1.2; }
-    .project-desc { font-size: 0.72rem; line-height: 1.7; color: var(--muted); margin-bottom: 16px; }
-    .project-tech { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
-    .tech-chip { font-size: 0.58rem; padding: 3px 8px; border: 1px solid rgba(123,95,255,0.4); color: var(--accent2); text-transform: uppercase; }
-    .project-link { display: inline-flex; align-items: center; gap: 7px; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: gap 0.2s; }
-    .project-link:hover { gap: 12px; }
-    .exp-list { display: flex; flex-direction: column; gap: 2px; }
-    .exp-item { background: var(--card); border: 1px solid var(--border); padding: 36px; display: grid; grid-template-columns: 190px 1fr; gap: 36px; transition: border-color 0.2s; }
-    .exp-item:hover { border-color: var(--accent); }
-    .exp-period { font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 7px; display: block; }
-    .exp-company { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
-    .exp-location { font-size: 0.68rem; color: var(--muted); }
-    .exp-role { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; }
-    .exp-points { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .exp-points li { font-size: 0.77rem; line-height: 1.7; color: var(--muted); padding-left: 16px; position: relative; }
-    .exp-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
-    .contact-card { background: var(--card); border: 1px solid var(--border); padding: 36px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s; }
-    .contact-card:hover { border-color: var(--accent); }
-    .contact-icon { font-size: 1.4rem; }
-    .contact-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-    .contact-value { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--accent); }
-    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; }
-    footer p { font-size: 0.68rem; color: var(--muted); }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 700px) {
-      nav { padding: 14px 20px; } .nav-links { display: none; } .hero { padding: 70px 20px 50px; }
-      section { padding: 50px 20px; } .stats-bar { flex-direction: column; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
-      .exp-item { grid-template-columns: 1fr; gap: 14px; }
-      .contact-grid, .projects-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 10px; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vignesh Kumar | Unity 3D & XR Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#03060f; --bg2:#060d1a; --surface:#0a1628; --card:#0b1a2e; --card-h:#0f2040;
+  --neon:#00d4ff; --neon2:#7b2fff; --neon3:#ff2d78; --purple:#a855f7;
+  --text:#cdd6f4; --muted:#5a6a8a;
+  --border:rgba(0,212,255,0.15); --border2:rgba(123,47,255,0.2);
+  --glow-b:0 0 12px rgba(0,212,255,0.5),0 0 40px rgba(0,212,255,0.15);
+  --glow-p:0 0 12px rgba(123,47,255,0.5),0 0 40px rgba(123,47,255,0.15);
+  --neon-dim:rgba(0,212,255,0.08);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;overflow-x:hidden;line-height:1.6;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--neon),var(--neon2));}
+
+/* BG */
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:48px 48px;}
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0;animation:breathe 9s ease-in-out infinite alternate;}
+.orb-1{width:700px;height:700px;background:rgba(0,212,255,0.055);top:-250px;left:-250px;animation-delay:0s;}
+.orb-2{width:600px;height:600px;background:rgba(123,47,255,0.065);bottom:-150px;right:-200px;animation-delay:-4s;}
+.orb-3{width:350px;height:350px;background:rgba(255,45,120,0.03);top:35%;left:55%;animation-delay:-8s;}
+@keyframes breathe{from{transform:scale(1) translate(0,0);}to{transform:scale(1.08) translate(20px,15px);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;background:rgba(3,6,15,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+nav::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--neon) 30%,var(--neon2) 70%,transparent 100%);opacity:0.4;}
+.nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.05rem;letter-spacing:0.2em;color:var(--neon);text-shadow:var(--glow-b);text-decoration:none;}
+.nav-logo em{color:var(--neon2);font-style:normal;}
+.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;position:relative;padding-bottom:3px;transition:color 0.25s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--neon);box-shadow:var(--glow-b);transition:width 0.3s;}
+.nav-links a:hover{color:var(--neon);}
+.nav-links a:hover::after{width:100%;}
+.nav-hire{font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;padding:9px 22px;border:1px solid var(--neon);color:var(--neon);text-decoration:none;background:transparent;position:relative;overflow:hidden;transition:color 0.3s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+.nav-hire::before{content:'';position:absolute;inset:0;background:var(--neon);transform:translateX(-101%);transition:transform 0.3s;z-index:-1;}
+.nav-hire:hover{color:var(--bg);}
+.nav-hire:hover::before{transform:translateX(0);}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:100px 64px 80px;}
+.hero-inner{max-width:860px;}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--neon);margin-bottom:36px;animation:slideIn 0.7s ease both;}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--neon);box-shadow:var(--glow-b);animation:blink 2s ease-in-out infinite;}
+.hero-badge-line{width:36px;height:1px;background:var(--neon);box-shadow:var(--glow-b);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-name{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(3rem,8vw,7rem);line-height:0.92;letter-spacing:-0.01em;margin-bottom:4px;animation:slideIn 0.7s 0.1s ease both;}
+.hero-name .n1{display:block;color:var(--text);}
+.hero-name .n2{display:block;color:transparent;-webkit-text-stroke:2px var(--neon2);filter:drop-shadow(0 0 18px rgba(123,47,255,0.6));}
+.hero-divider{display:flex;align-items:center;gap:14px;margin:26px 0 28px;animation:slideIn 0.7s 0.2s ease both;}
+.hero-divider-line{flex:0 0 44px;height:1px;background:linear-gradient(90deg,var(--neon),transparent);}
+.hero-divider-text{font-family:'Share Tech Mono',monospace;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--purple);white-space:nowrap;}
+.hero-desc{font-size:1.05rem;line-height:1.8;color:var(--muted);max-width:560px;margin-bottom:48px;animation:slideIn 0.7s 0.3s ease both;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;animation:slideIn 0.7s 0.4s ease both;}
+.btn-primary,.btn-ghost{display:inline-flex;align-items:center;gap:10px;font-family:'Share Tech Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;padding:14px 34px;text-decoration:none;position:relative;overflow:hidden;transition:all 0.3s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+.btn-primary{background:linear-gradient(135deg,var(--neon),var(--neon2));color:#000;font-weight:700;}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#fff,rgba(255,255,255,0.5));opacity:0;transition:opacity 0.3s;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:var(--glow-b),var(--glow-p);}
+.btn-primary:hover::after{opacity:0.15;}
+.btn-ghost{background:transparent;border:1px solid var(--neon);color:var(--neon);}
+.btn-ghost::before{content:'';position:absolute;inset:0;background:var(--neon-dim);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.btn-ghost:hover{box-shadow:var(--glow-b);}
+.btn-ghost:hover::before{transform:scaleX(1);}
+@keyframes slideIn{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* STATS */
+.stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(6,13,26,0.9);backdrop-filter:blur(12px);}
+.stat{padding:30px 20px;text-align:center;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.35s;}
+.stat:last-child{border-right:none;}
+.stat::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2px;background:linear-gradient(90deg,var(--neon),var(--neon2));transition:left 0.4s,right 0.4s;}
+.stat:hover{background:rgba(0,212,255,0.03);}
+.stat:hover::after{left:0;right:0;}
+.stat-n{font-family:'Orbitron',monospace;font-size:2.6rem;font-weight:900;color:var(--neon);line-height:1;display:block;text-shadow:var(--glow-b);}
+.stat-l{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:6px;display:block;}
+
+/* SECTIONS */
+.sec{position:relative;z-index:1;padding:96px 64px;}
+.sec-alt{background:rgba(6,13,26,0.75);}
+.sec-head{display:flex;align-items:center;gap:18px;margin-bottom:60px;}
+.sec-idx{font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;color:var(--neon);border:1px solid var(--border);padding:4px 10px;flex-shrink:0;}
+.sec-title{font-family:'Orbitron',monospace;font-weight:700;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:0.03em;color:var(--text);}
+.sec-title span{color:var(--neon);}
+.sec-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:2px;}
+.skill-card{background:var(--card);border:1px solid var(--border);padding:28px 28px 32px;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s,background 0.3s;}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--neon),var(--neon2));transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
+.skill-card::after{content:'';position:absolute;bottom:0;right:0;width:50px;height:50px;border-right:1px solid var(--border2);border-bottom:1px solid var(--border2);transition:border-color 0.3s;}
+.skill-card:hover{border-color:rgba(0,212,255,0.4);background:var(--card-h);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,212,255,0.07);}
+.skill-card:hover::before{transform:scaleX(1);}
+.skill-card:hover::after{border-color:rgba(0,212,255,0.35);}
+.sk-icon{font-size:1.7rem;margin-bottom:14px;display:block;}
+.sk-name{font-family:'Orbitron',monospace;font-weight:700;font-size:0.72rem;letter-spacing:0.14em;color:var(--neon);text-transform:uppercase;margin-bottom:16px;}
+.sk-pills{display:flex;flex-wrap:wrap;gap:7px;}
+.sk-pill{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.06em;padding:4px 11px;border:1px solid rgba(0,212,255,0.18);color:var(--muted);transition:all 0.22s;cursor:default;}
+.sk-pill:hover{border-color:var(--neon);color:var(--neon);background:var(--neon-dim);}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:2px;}
+.proj-card{background:var(--card);border:1px solid var(--border);overflow:hidden;position:relative;transition:border-color 0.35s,transform 0.35s,box-shadow 0.35s;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));}
+.proj-card:hover{border-color:rgba(0,212,255,0.45);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,212,255,0.09);}
+.proj-card:hover .proj-img{transform:scale(1.07);filter:brightness(0.95) saturate(1.1);}
+.proj-card:hover .proj-overlay{opacity:1;}
+.proj-card:hover .proj-title{color:var(--neon);}
+.proj-scan{position:absolute;left:0;right:0;height:1.5px;top:0;z-index:10;background:linear-gradient(90deg,transparent,var(--neon),transparent);opacity:0;pointer-events:none;}
+.proj-card:hover .proj-scan{opacity:1;animation:scan 1.2s linear forwards;}
+@keyframes scan{from{top:0}to{top:100%}}
+.proj-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#050e1e,#0b1e38);}
+.proj-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease,filter 0.5s ease;filter:brightness(0.88) saturate(0.9);}
+.proj-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(135deg,#060f1f,#0c1e38);}
+.proj-overlay{position:absolute;inset:0;z-index:5;background:linear-gradient(135deg,rgba(0,212,255,0.13),rgba(123,47,255,0.13));display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;text-decoration:none;}
+.proj-play{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--neon),var(--neon2));display:flex;align-items:center;justify-content:center;box-shadow:var(--glow-b);transform:scale(0.75);transition:transform 0.3s;}
+.proj-card:hover .proj-play{transform:scale(1);}
+.proj-play svg{fill:#000;width:22px;height:22px;margin-left:3px;}
+.proj-badge{position:absolute;top:12px;right:12px;z-index:6;font-family:'Share Tech Mono',monospace;font-size:0.56rem;letter-spacing:0.14em;text-transform:uppercase;padding:4px 10px;background:rgba(3,6,15,0.8);border:1px solid var(--neon);color:var(--neon);backdrop-filter:blur(8px);}
+.proj-body{padding:22px 24px 26px;}
+.proj-cat{font-family:'Share Tech Mono',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--neon);margin-bottom:7px;}
+.proj-title{font-family:'Orbitron',monospace;font-weight:700;font-size:1rem;line-height:1.3;margin-bottom:10px;color:var(--text);transition:color 0.25s;}
+.proj-desc{font-size:0.83rem;line-height:1.75;color:var(--muted);margin-bottom:16px;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.proj-tag{font-family:'Share Tech Mono',monospace;font-size:0.56rem;letter-spacing:0.07em;text-transform:uppercase;padding:3px 9px;border:1px solid rgba(123,47,255,0.32);color:var(--purple);transition:all 0.2s;}
+.proj-tag:hover{border-color:var(--purple);background:rgba(123,47,255,0.08);}
+.proj-links{display:flex;gap:16px;flex-wrap:wrap;}
+.proj-link{display:inline-flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--neon);text-decoration:none;position:relative;padding-bottom:2px;transition:text-shadow 0.2s;}
+.proj-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--neon);transition:width 0.25s;}
+.proj-link:hover{text-shadow:var(--glow-b);}
+.proj-link:hover::after{width:100%;}
+.proj-link svg{width:11px;height:11px;fill:currentColor;}
+
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column;gap:2px;}
+.exp-card{display:grid;grid-template-columns:210px 1fr;gap:48px;padding:40px 44px;background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color 0.3s,background 0.3s;}
+.exp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--neon),var(--neon2));transform:scaleY(0);transition:transform 0.4s;}
+.exp-card::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-top:1px solid var(--border2);border-right:1px solid var(--border2);transition:border-color 0.3s;}
+.exp-card:hover{border-color:rgba(0,212,255,0.3);background:var(--card-h);}
+.exp-card:hover::before{transform:scaleY(1);}
+.exp-card:hover::after{border-color:rgba(0,212,255,0.3);}
+.exp-period{font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--neon);display:block;margin-bottom:10px;}
+.exp-co{font-family:'Orbitron',monospace;font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:5px;line-height:1.4;}
+.exp-loc{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.06em;}
+.exp-role{font-family:'Orbitron',monospace;font-weight:700;font-size:1.1rem;color:var(--neon);margin-bottom:18px;letter-spacing:0.03em;}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.exp-bullets li{font-size:0.88rem;line-height:1.7;color:var(--muted);padding-left:18px;position:relative;}
+.exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--neon);font-size:0.72rem;top:3px;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+.contact-card{background:var(--card);border:1px solid var(--border);padding:38px 36px;text-decoration:none;color:inherit;display:flex;align-items:flex-start;gap:18px;position:relative;overflow:hidden;transition:all 0.3s;}
+.contact-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,0.04),transparent);opacity:0;transition:opacity 0.3s;}
+.contact-card:hover{border-color:rgba(0,212,255,0.38);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,0.07);}
+.contact-card:hover::after{opacity:1;}
+.c-ico{width:46px;height:46px;flex-shrink:0;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.25rem;transition:all 0.3s;}
+.contact-card:hover .c-ico{border-color:var(--neon);box-shadow:var(--glow-b);background:var(--neon-dim);}
+.c-lbl{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.c-val{font-family:'Orbitron',monospace;font-weight:600;font-size:0.82rem;color:var(--neon);transition:text-shadow 0.3s;}
+.contact-card:hover .c-val{text-shadow:var(--glow-b);}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:26px 64px;display:flex;justify-content:space-between;align-items:center;background:rgba(3,6,15,0.97);}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--neon),var(--neon2),transparent);opacity:0.35;}
+.f-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:0.95rem;letter-spacing:0.2em;color:var(--neon);text-shadow:var(--glow-b);}
+.f-copy{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;}
+.f-tags{font-family:'Share Tech Mono',monospace;font-size:0.58rem;color:var(--neon2);letter-spacing:0.12em;}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .nav-links,.nav-hire{display:none;}
+  .hero{padding:90px 20px 60px;}
+  .hero-name{font-size:3rem;}
+  .hero-divider-text{font-size:0.62rem;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .stat:nth-child(2){border-right:none;}
+  .stat:nth-child(3){border-top:1px solid var(--border);}
+  .stat:nth-child(4){border-top:1px solid var(--border);border-right:none;}
+  .sec{padding:60px 20px;}
+  .skills-grid,.proj-grid{grid-template-columns:1fr;}
+  .exp-card{grid-template-columns:1fr;gap:20px;padding:28px 20px;}
+  .contact-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:12px;padding:22px 20px;text-align:center;}
+}
+</style>
 </head>
 <body>
-  <div class="orb orb1"></div><div class="orb orb2"></div>
 
-  <nav>
-    <span class="nav-logo">VK</span>
-    <ul class="nav-links">
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<div class="bg-grid"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
-  <section class="hero">
-    <div class="hero-content">
-      <span class="hero-tag">Available for new opportunities</span>
-      <h1 class="hero-name">VIGNESH<span class="line2">KUMAR</span></h1>
-      <p class="hero-title">Unity 3D Developer &nbsp;·&nbsp; VR / AR / XR Specialist</p>
-      <p class="hero-desc">Unity developer with 3+ years of experience building immersive 2D, 3D, VR, and multiplayer applications — from simulations and training solutions to interactive games for Meta Quest and PC platforms.</p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">View Projects ↓</a>
-        <a href="/cdn-cgi/l/email-protection#cabca3ada4afb9a2a1b9bca88aada7aba3a6e4a9a5a7" class="btn btn-outline">Get In Touch</a>
-      </div>
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">VK<em>.</em></a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:vigneshksvb@gmail.com" class="nav-hire">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-line"></span>
+      <span class="hero-badge-dot"></span>
+      Available for new opportunities · Chennai, India
     </div>
-  </section>
-
-  <div class="stats-bar">
-    <div class="stat-item"><span class="stat-num">3+</span><span class="stat-label">Years Experience</span></div>
-    <div class="stat-item"><span class="stat-num">9</span><span class="stat-label">Projects Built</span></div>
-    <div class="stat-item"><span class="stat-num">5</span><span class="stat-label">Meta Devices</span></div>
-    <div class="stat-item"><span class="stat-num">1</span><span class="stat-label">App on Meta Horizon</span></div>
+    <h1 class="hero-name">
+      <span class="n1">VIGNESH</span>
+      <span class="n2">KUMAR</span>
+    </h1>
+    <div class="hero-divider">
+      <span class="hero-divider-line"></span>
+      <span class="hero-divider-text">Unity 3D · VR · AR · XR · Multiplayer</span>
+    </div>
+    <p class="hero-desc">3+ years building production-grade immersive experiences — from surgical simulations and medical VR to multiplayer social worlds and physiotherapy games. Published on Meta Horizon. Shipped across Quest, PC VR, and Android.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">Explore Projects ↓</a>
+      <a href="mailto:vigneshksvb@gmail.com" class="btn-ghost">Get In Touch</a>
+    </div>
   </div>
+</section>
 
-  <section id="skills">
-    <div class="section-header">
-      <span class="section-num">01</span><h2 class="section-title">Technical Stack</h2><div class="section-line"></div>
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><span class="stat-n">3+</span><span class="stat-l">Years Experience</span></div>
+  <div class="stat"><span class="stat-n">10</span><span class="stat-l">Projects Shipped</span></div>
+  <div class="stat"><span class="stat-n">5</span><span class="stat-l">Meta Devices</span></div>
+  <div class="stat"><span class="stat-n">1</span><span class="stat-l">App on Meta Horizon</span></div>
+</div>
+
+<!-- SKILLS -->
+<div class="sec" id="skills">
+  <div class="sec-head">
+    <span class="sec-idx">01</span>
+    <h2 class="sec-title">Technical <span>Stack</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <span class="sk-icon">🎮</span>
+      <div class="sk-name">Engine &amp; Language</div>
+      <div class="sk-pills"><span class="sk-pill">Unity 3D</span><span class="sk-pill">Unity 2D</span><span class="sk-pill">Blender</span><span class="sk-pill">C#</span></div>
     </div>
-    <div class="skills-grid">
-      <div class="skill-block"><div class="skill-block-icon">🎮</div><div class="skill-block-title">Game Engine & Tools</div><div class="skill-tags"><span class="skill-tag">Unity 3D</span><span class="skill-tag">Blender</span><span class="skill-tag">C#</span></div></div>
-      <div class="skill-block"><div class="skill-block-icon">🥽</div><div class="skill-block-title">VR / AR / XR</div><div class="skill-tags"><span class="skill-tag">Meta XR SDK</span><span class="skill-tag">XR Interaction Toolkit</span><span class="skill-tag">AR Foundation</span><span class="skill-tag">PC VR</span><span class="skill-tag">Standalone VR</span><span class="skill-tag">SOFA Physics</span><span class="skill-tag">Performance Optimization</span></div></div>
-      <div class="skill-block"><div class="skill-block-icon">🌐</div><div class="skill-block-title">Networking & Backend</div><div class="skill-tags"><span class="skill-tag">Photon PUN</span><span class="skill-tag">Photon Chat</span><span class="skill-tag">Firebase Auth</span><span class="skill-tag">Firebase Realtime DB</span><span class="skill-tag">Google Sign-In</span></div></div>
-      <div class="skill-block"><div class="skill-block-icon">🔧</div><div class="skill-block-title">Hardware</div><div class="skill-tags"><span class="skill-tag">Quest 2</span><span class="skill-tag">Quest 3</span><span class="skill-tag">Quest 3s</span><span class="skill-tag">Quest Pro</span><span class="skill-tag">HoloLens</span><span class="skill-tag">OneTouch Haptic Pen</span><span class="skill-tag">Android</span></div></div>
+    <div class="skill-card">
+      <span class="sk-icon">🥽</span>
+      <div class="sk-name">VR / AR / XR</div>
+      <div class="sk-pills"><span class="sk-pill">Meta XR SDK</span><span class="sk-pill">XR Interaction Toolkit</span><span class="sk-pill">AR Foundation</span><span class="sk-pill">Face Tracking</span><span class="sk-pill">PC VR</span><span class="sk-pill">Standalone VR</span><span class="sk-pill">SOFA Physics</span><span class="sk-pill">VR Optimization</span></div>
     </div>
-  </section>
-
-  <section id="projects" style="background:rgba(15,23,38,0.5);">
-    <div class="section-header">
-      <span class="section-num">02</span><h2 class="section-title">Featured Projects</h2><div class="section-line"></div>
+    <div class="skill-card">
+      <span class="sk-icon">🌐</span>
+      <div class="sk-name">Networking &amp; Backend</div>
+      <div class="sk-pills"><span class="sk-pill">Photon PUN</span><span class="sk-pill">Photon Chat</span><span class="sk-pill">Firebase Auth</span><span class="sk-pill">Firebase Realtime DB</span><span class="sk-pill">Google Sign-In</span><span class="sk-pill">Ready Player Me</span></div>
     </div>
-    <div class="projects-grid">
+    <div class="skill-card">
+      <span class="sk-icon">🔧</span>
+      <div class="sk-name">Hardware</div>
+      <div class="sk-pills"><span class="sk-pill">Quest 2</span><span class="sk-pill">Quest 3</span><span class="sk-pill">Quest 3s</span><span class="sk-pill">Quest Pro</span><span class="sk-pill">HoloLens</span><span class="sk-pill">OneTouch Haptic Pen</span><span class="sk-pill">Android</span></div>
+    </div>
+  </div>
+</div>
 
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/ysoC_1R107c/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🫀</div>'"/>
-          <a href="https://youtu.be/ysoC_1R107c" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Meta Horizon</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Medical Education · VR</p>
-          <h3 class="project-name">VR Human Anatomy</h3>
-          <p class="project-desc">Interactive 3D anatomy app published on Meta Horizon. Immersive visualization of organs, systems, and structures in VR for medical education.</p>
-          <div class="project-tech"><span class="tech-chip">Unity 3D</span><span class="tech-chip">Meta XR SDK</span><span class="tech-chip">Quest 2/3</span><span class="tech-chip">C#</span></div>
-          <a href="https://youtu.be/ysoC_1R107c" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
+<!-- PROJECTS -->
+<div class="sec sec-alt" id="projects">
+  <div class="sec-head">
+    <span class="sec-idx">02</span>
+    <h2 class="sec-title">Featured <span>Projects</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="proj-grid">
+
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/ysoC_1R107c/maxresdefault.jpg" alt="VR Human Anatomy" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🫀</div>'"/>
+        <a href="https://youtu.be/ysoC_1R107c" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Meta Horizon</span>
       </div>
-
-     
-
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/RJ9Zgtwitig/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🎓</div>'"/>
-          <a href="https://youtu.be/RJ9Zgtwitig" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Education</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">EdTech · Mobile</p>
-          <h3 class="project-name">Career Arcade</h3>
-          <p class="project-desc">Educational platform with Firebase authentication (Email & Google Sign-In) and multiple 2D/3D career-exploration games in a unified 3D environment.</p>
-          <div class="project-tech"><span class="tech-chip">Unity 3D</span><span class="tech-chip">Firebase</span><span class="tech-chip">Google Auth</span><span class="tech-chip">C#</span></div>
-          <a href="https://youtu.be/RJ9Zgtwitig" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
+      <div class="proj-body">
+        <p class="proj-cat">Medical Education · VR</p>
+        <h3 class="proj-title">VR Human Anatomy</h3>
+        <p class="proj-desc">Interactive 3D anatomy app published on Meta Horizon. Immersive visualization of organs, systems, and structures in VR for medical education.</p>
+        <div class="proj-tags"><span class="proj-tag">Unity 3D</span><span class="proj-tag">Meta XR SDK</span><span class="proj-tag">Quest 2/3</span><span class="proj-tag">C#</span></div>
+        <div class="proj-links"><a href="https://youtu.be/ysoC_1R107c" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
       </div>
+    </div>
 
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/cDP6h1d-rZ4/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🌍</div>'"/>
-          <a href="https://youtu.be/cDP6h1d-rZ4" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Enterprise</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Tourism & Enterprise · VR</p>
-          <h3 class="project-name">VR Tour — AMTZ & GT Holiday</h3>
-          <p class="project-desc">Immersive 360° virtual tour experiences for enterprise clients on Meta devices, enabling remote exploration of facilities and travel destinations.</p>
-          <div class="project-tech"><span class="tech-chip">Unity 3D</span><span class="tech-chip">360° Video</span><span class="tech-chip">Meta Quest</span><span class="tech-chip">XR Interaction Toolkit</span></div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://youtu.be/cDP6h1d-rZ4" target="_blank" class="project-link">Demo 1 →</a>
-            <a href="https://youtu.be/h1WaccYXAgY" target="_blank" class="project-link">Demo 2 →</a>
-          </div>
-        </div>
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/esBBP1x383s/maxresdefault.jpg" alt="Cataract Surgery" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🔬</div>'"/>
+        <a href="https://youtube.com/shorts/esBBP1x383s" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Surgical Sim</span>
       </div>
+      <div class="proj-body">
+        <p class="proj-cat">Medical Simulation · PC VR</p>
+        <h3 class="proj-title">Cataract Surgery Simulator</h3>
+        <p class="proj-desc">High-fidelity surgical simulation with realistic environments, procedural UI workflows, and OneTouch haptic pen integration for authentic tactile feedback.</p>
+        <div class="proj-tags"><span class="proj-tag">Unity 3D</span><span class="proj-tag">SOFA Physics</span><span class="proj-tag">PC VR</span><span class="proj-tag">Haptic Pen</span></div>
+        <div class="proj-links"><a href="https://youtube.com/shorts/esBBP1x383s" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
+      </div>
+    </div>
 
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/yH4irmYxlm0/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🎮</div>'"/>
-          <a href="https://youtu.be/yH4irmYxlm0" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Multiplayer</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Gaming · Unity 3D</p>
-          <h3 class="project-name">Multiplayer 3D Game</h3>
-          <p class="project-desc">Real-time multiplayer game with Firebase authentication, customizable Ready Player Me avatars, and live interaction via Photon Networking.</p>
-          <div class="project-tech"><span class="tech-chip">Photon PUN</span><span class="tech-chip">Firebase Auth</span><span class="tech-chip">Ready Player Me</span><span class="tech-chip">Unity 3D</span></div>
-          <a href="https://youtu.be/yH4irmYxlm0" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/RJ9Zgtwitig/maxresdefault.jpg" alt="Career Arcade" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🎓</div>'"/>
+        <a href="https://youtu.be/RJ9Zgtwitig" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Education</span>
       </div>
+      <div class="proj-body">
+        <p class="proj-cat">EdTech · Mobile</p>
+        <h3 class="proj-title">Career Arcade</h3>
+        <p class="proj-desc">Educational platform with Firebase authentication and multiple 2D/3D career-exploration games embedded in a unified interactive 3D environment.</p>
+        <div class="proj-tags"><span class="proj-tag">Unity 3D</span><span class="proj-tag">Firebase</span><span class="proj-tag">Google Auth</span><span class="proj-tag">C#</span></div>
+        <div class="proj-links"><a href="https://youtu.be/RJ9Zgtwitig" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
+      </div>
+    </div>
 
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/HNaw01XSbBg/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🏛️</div>'"/>
-          <a href="https://youtu.be/HNaw01XSbBg" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Architecture</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Architecture · Unity VR</p>
-          <h3 class="project-name">VR Architecture Walkthrough</h3>
-          <p class="project-desc">Immersive VR walkthrough with runtime wall color customization and dynamic floor tile changes — letting clients visualize spaces in real time.</p>
-          <div class="project-tech"><span class="tech-chip">Unity 3D</span><span class="tech-chip">VR</span><span class="tech-chip">Runtime Customization</span><span class="tech-chip">XR Interaction Toolkit</span></div>
-          <a href="https://youtu.be/HNaw01XSbBg" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/eu-pVW8QC0o/maxresdefault.jpg" alt="GoClubbing VR" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🎵</div>'"/>
+        <a href="https://youtube.com/shorts/eu-pVW8QC0o" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Social VR</span>
       </div>
+      <div class="proj-body">
+        <p class="proj-cat">Social · Multiplayer VR</p>
+        <h3 class="proj-title">GoClubbing VR</h3>
+        <p class="proj-desc">Multiplayer social VR nightclub for Meta Quest. Optimized Photon PUN networking, resolved sync issues, and improved performance for a seamless social experience.</p>
+        <div class="proj-tags"><span class="proj-tag">Photon PUN</span><span class="proj-tag">Meta Quest</span><span class="proj-tag">Unity 3D</span><span class="proj-tag">VR Optimization</span></div>
+        <div class="proj-links"><a href="https://youtube.com/shorts/eu-pVW8QC0o" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
+      </div>
+    </div>
 
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/12oD_FEj2sc/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🏃</div>'"/>
-          <a href="https://youtu.be/12oD_FEj2sc" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Physiotherapy</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Health & Rehabilitation · 3D</p>
-          <h3 class="project-name">Running Therapy Game</h3>
-          <p class="project-desc">3D running game for hand physiotherapy. Collect coins, dodge obstacles, beat the clock — designed to improve hand movement and coordination during rehabilitation.</p>
-          <div class="project-tech"><span class="tech-chip">Unity 3D</span><span class="tech-chip">C#</span><span class="tech-chip">Physiotherapy</span><span class="tech-chip">Game Design</span></div>
-          <a href="https://youtu.be/12oD_FEj2sc" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/cDP6h1d-rZ4/maxresdefault.jpg" alt="VR Tour" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🌍</div>'"/>
+        <a href="https://youtu.be/cDP6h1d-rZ4" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Enterprise</span>
       </div>
-
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/3hQfP1_pw-Y/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🥚</div>'"/>
-          <a href="https://youtu.be/3hQfP1_pw-Y" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Physiotherapy</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Health & Rehabilitation · 2D</p>
-          <h3 class="project-name">Egg Catcher Game</h3>
-          <p class="project-desc">2D egg catcher for physiotherapy training. Catch falling eggs to build hand-eye coordination and fine motor control — purpose-built for motor skill rehabilitation.</p>
-          <div class="project-tech"><span class="tech-chip">Unity 2D</span><span class="tech-chip">C#</span><span class="tech-chip">Physiotherapy</span><span class="tech-chip">Motor Skills</span></div>
-          <a href="https://youtu.be/3hQfP1_pw-Y" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/PAvl7184VMg/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>💇</div>'"/>
-          <a href="https://youtube.com/shorts/PAvl7184VMg" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Augmented Reality</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">AR · Face Tracking</p>
-          <h3 class="project-name">AR Hair Styling</h3>
-          <p class="project-desc">Real-time AR hair styling app with face detection and tracking. Users can dynamically apply different hairstyles and change hair color, style, and length at runtime for an instant AR preview.</p>
-          <div class="project-tech"><span class="tech-chip">AR Foundation</span><span class="tech-chip">Face Tracking</span><span class="tech-chip">Unity 3D</span><span class="tech-chip">C#</span></div>
-          <a href="https://youtube.com/shorts/PAvl7184VMg" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
-      </div>
-
-       <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/eu-pVW8QC0o/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🎵</div>'"/>
-          <a href="https://youtube.com/shorts/eu-pVW8QC0o" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Social VR</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Social · Multiplayer VR</p>
-          <h3 class="project-name">GoClubbing VR</h3>
-          <p class="project-desc">Multiplayer social VR nightclub for Meta Quest. Optimized Photon PUN networking, resolved sync issues, and improved performance for a seamless social experience.</p>
-          <div class="project-tech"><span class="tech-chip">Photon PUN</span><span class="tech-chip">Meta Quest</span><span class="tech-chip">Unity 3D</span><span class="tech-chip">VR Optimization</span></div>
-          <a href="https://youtube.com/shorts/eu-pVW8QC0o" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
-      </div>
-      
- <div class="project-card">
-        <div class="project-thumb">
-          <img class="yt-thumb" src="https://img.youtube.com/vi/esBBP1x383s/maxresdefault.jpg" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🔬</div>'"/>
-          <a href="https://youtube.com/shorts/esBBP1x383s" target="_blank" class="project-overlay"><div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
-          <span class="project-badge">Surgical Sim</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Medical Simulation · PC VR</p>
-          <h3 class="project-name">Cataract Surgery Simulator</h3>
-          <p class="project-desc">High-fidelity surgical simulation with realistic environments, procedural UI workflows, and OneTouch haptic pen integration for authentic tactile feedback.</p>
-          <div class="project-tech"><span class="tech-chip">Unity 3D</span><span class="tech-chip">SOFA Physics</span><span class="tech-chip">PC VR</span><span class="tech-chip">Haptic Pen</span></div>
-          <a href="https://youtube.com/shorts/esBBP1x383s" target="_blank" class="project-link">Watch Demo →</a>
+      <div class="proj-body">
+        <p class="proj-cat">Tourism &amp; Enterprise · VR</p>
+        <h3 class="proj-title">VR Tour — AMTZ &amp; GT Holiday</h3>
+        <p class="proj-desc">Immersive 360° virtual tour experiences for enterprise clients on Meta devices, enabling remote exploration of facilities and travel destinations.</p>
+        <div class="proj-tags"><span class="proj-tag">Unity 3D</span><span class="proj-tag">360° Video</span><span class="proj-tag">Meta Quest</span><span class="proj-tag">XR Interaction Toolkit</span></div>
+        <div class="proj-links">
+          <a href="https://youtu.be/cDP6h1d-rZ4" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Demo 1</a>
+          <a href="https://youtu.be/h1WaccYXAgY" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Demo 2</a>
         </div>
       </div>
     </div>
-  </section>
 
-  <section id="experience">
-    <div class="section-header">
-      <span class="section-num">03</span><h2 class="section-title">Experience</h2><div class="section-line"></div>
-    </div>
-    <div class="exp-list">
-      <div class="exp-item">
-        <div class="exp-meta">
-          <span class="exp-period">Apr 2023 – Present</span>
-          <div class="exp-company">Machenn Innovation Pvt Ltd</div>
-          <div class="exp-location">Coimbatore, India</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Unity 3D Developer</div>
-          <ul class="exp-points">
-            <li>Developed VR Tour applications for AMTZ and GT Holiday, delivering immersive 360° virtual experiences on Meta devices.</li>
-            <li>Designed and published VR Human Anatomy on Meta Horizon for detailed anatomical exploration.</li>
-            <li>Built a Cataract Surgery PC VR simulation with realistic surgical UI and OneTouch haptic pen integration.</li>
-            <li>Developed CPR VR training app with Firebase authentication and full scene interaction logic.</li>
-            <li>Created Career Arcade with Firebase login and multiple 2D/3D games in a unified environment.</li>
-            <li>Optimized networking and resolved multiplayer bugs in GoClubbing VR using Photon PUN.</li>
-          </ul>
-        </div>
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/yH4irmYxlm0/maxresdefault.jpg" alt="Multiplayer 3D Game" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🎮</div>'"/>
+        <a href="https://youtu.be/yH4irmYxlm0" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Multiplayer</span>
       </div>
-      <div class="exp-item">
-        <div class="exp-meta">
-          <span class="exp-period">Jan 2022 – Jan 2023</span>
-          <div class="exp-company">Rotowix Pvt Ltd</div>
-          <div class="exp-location">Madurai, India</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Unity 3D Developer</div>
-          <ul class="exp-points">
-            <li>Developed a multiplayer LUDO game, handling UI and gameplay logic integration.</li>
-            <li>Built a VR Engine Assembly training application with scene design, UI, and QA workflows.</li>
-            <li>Contributed to E-Learning VR applications for interactive training and skill development.</li>
-          </ul>
-        </div>
+      <div class="proj-body">
+        <p class="proj-cat">Gaming · Unity 3D</p>
+        <h3 class="proj-title">Multiplayer 3D Game</h3>
+        <p class="proj-desc">Real-time multiplayer game with Firebase authentication, customizable Ready Player Me avatars, and live interaction via Photon Networking.</p>
+        <div class="proj-tags"><span class="proj-tag">Photon PUN</span><span class="proj-tag">Firebase Auth</span><span class="proj-tag">Ready Player Me</span><span class="proj-tag">Unity 3D</span></div>
+        <div class="proj-links"><a href="https://youtu.be/yH4irmYxlm0" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
       </div>
     </div>
-  </section>
 
-  <section id="contact" style="background:rgba(15,23,38,0.5);">
-    <div class="section-header">
-      <span class="section-num">04</span><h2 class="section-title">Let's Connect</h2><div class="section-line"></div>
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/HNaw01XSbBg/maxresdefault.jpg" alt="VR Architecture" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🏛️</div>'"/>
+        <a href="https://youtu.be/HNaw01XSbBg" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Architecture</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-cat">Architecture · Unity VR</p>
+        <h3 class="proj-title">VR Architecture Walkthrough</h3>
+        <p class="proj-desc">Immersive VR walkthrough with runtime wall color customization and dynamic floor tile changes — letting clients visualize and personalize spaces in real time.</p>
+        <div class="proj-tags"><span class="proj-tag">Unity 3D</span><span class="proj-tag">VR</span><span class="proj-tag">Runtime Customization</span><span class="proj-tag">XR Interaction Toolkit</span></div>
+        <div class="proj-links"><a href="https://youtu.be/HNaw01XSbBg" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
+      </div>
     </div>
-    <div class="contact-grid">
-      <a href="/cdn-cgi/l/email-protection#7e081719101b0d16150d081c3e19131f1712501d1113" class="contact-card"><div class="contact-icon">✉️</div><div class="contact-label">Email</div><div class="contact-value"><span class="__cf_email__" data-cfemail="d8aeb1bfb6bdabb0b3abaeba98bfb5b9b1b4f6bbb7b5">[email&#160;protected]</span></div></a>
-      <a href="tel:+919626886501" class="contact-card"><div class="contact-icon">📞</div><div class="contact-label">Phone</div><div class="contact-value">+91 96268 86501</div></a>
-      <div class="contact-card"><div class="contact-icon">📍</div><div class="contact-label">Location</div><div class="contact-value">Chennai, India</div></div>
-    </div>
-  </section>
 
-  <footer>
-    <p>©
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/12oD_FEj2sc/maxresdefault.jpg" alt="Running Therapy Game" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🏃</div>'"/>
+        <a href="https://youtu.be/12oD_FEj2sc" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Physiotherapy</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-cat">Health &amp; Rehabilitation · 3D</p>
+        <h3 class="proj-title">Running Therapy Game</h3>
+        <p class="proj-desc">3D running game for hand physiotherapy. Collect coins, dodge obstacles, beat the clock — designed to improve hand movement and coordination during rehabilitation.</p>
+        <div class="proj-tags"><span class="proj-tag">Unity 3D</span><span class="proj-tag">C#</span><span class="proj-tag">Physiotherapy</span><span class="proj-tag">Game Design</span></div>
+        <div class="proj-links"><a href="https://youtu.be/12oD_FEj2sc" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/3hQfP1_pw-Y/maxresdefault.jpg" alt="Egg Catcher Game" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>🥚</div>'"/>
+        <a href="https://youtu.be/3hQfP1_pw-Y" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Physiotherapy</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-cat">Health &amp; Rehabilitation · 2D</p>
+        <h3 class="proj-title">Egg Catcher Game</h3>
+        <p class="proj-desc">2D egg catcher for physiotherapy training. Catch falling eggs to build hand-eye coordination and fine motor control — purpose-built for motor skill rehabilitation.</p>
+        <div class="proj-tags"><span class="proj-tag">Unity 2D</span><span class="proj-tag">C#</span><span class="proj-tag">Physiotherapy</span><span class="proj-tag">Motor Skills</span></div>
+        <div class="proj-links"><a href="https://youtu.be/3hQfP1_pw-Y" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-scan"></div>
+      <div class="proj-thumb">
+        <img class="proj-img" src="https://img.youtube.com/vi/PAvl7184VMg/maxresdefault.jpg" alt="AR Hair Styling" onerror="this.parentElement.innerHTML='<div class=\'proj-fallback\'>💇</div>'"/>
+        <a href="https://youtube.com/shorts/PAvl7184VMg" target="_blank" class="proj-overlay"><div class="proj-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>
+        <span class="proj-badge">Augmented Reality</span>
+      </div>
+      <div class="proj-body">
+        <p class="proj-cat">AR · Face Tracking</p>
+        <h3 class="proj-title">AR Hair Styling</h3>
+        <p class="proj-desc">Real-time AR hair styling app with face detection and tracking. Dynamically apply hairstyles and change color, style, and length at runtime for an instant AR preview.</p>
+        <div class="proj-tags"><span class="proj-tag">AR Foundation</span><span class="proj-tag">Face Tracking</span><span class="proj-tag">Unity 3D</span><span class="proj-tag">C#</span></div>
+        <div class="proj-links"><a href="https://youtube.com/shorts/PAvl7184VMg" target="_blank" class="proj-link"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Demo</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="sec" id="experience">
+  <div class="sec-head">
+    <span class="sec-idx">03</span>
+    <h2 class="sec-title">Work <span>Experience</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-card">
+      <div>
+        <span class="exp-period">APR 2023 — PRESENT</span>
+        <div class="exp-co">Machenn Innovation Pvt Ltd</div>
+        <div class="exp-loc">📍 Coimbatore, India</div>
+      </div>
+      <div>
+        <div class="exp-role">Unity 3D Developer</div>
+        <ul class="exp-bullets">
+          <li>Developed VR Tour applications for AMTZ and GT Holiday, delivering immersive 360° virtual experiences on Meta devices.</li>
+          <li>Designed and published VR Human Anatomy on Meta Horizon for detailed anatomical exploration in VR.</li>
+          <li>Built Cataract Surgery PC VR simulation with realistic surgical UI and OneTouch haptic pen integration.</li>
+          <li>Developed CPR VR training app with Firebase authentication and full scene interaction logic.</li>
+          <li>Created Career Arcade with Firebase login and multiple 2D/3D games in a unified 3D environment.</li>
+          <li>Optimized networking and resolved multiplayer bugs in GoClubbing VR using Photon PUN.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div>
+        <span class="exp-period">JAN 2022 — JAN 2023</span>
+        <div class="exp-co">Rotowix Pvt Ltd</div>
+        <div class="exp-loc">📍 Madurai, India</div>
+      </div>
+      <div>
+        <div class="exp-role">Unity 3D Developer</div>
+        <ul class="exp-bullets">
+          <li>Developed a multiplayer LUDO game, handling UI implementation and gameplay logic integration.</li>
+          <li>Built a VR Engine Assembly training application with scene design, UI systems, and QA workflows.</li>
+          <li>Contributed to E-Learning VR applications focused on interactive training and skill development.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="sec sec-alt" id="contact">
+  <div class="sec-head">
+    <span class="sec-idx">04</span>
+    <h2 class="sec-title">Get In <span>Touch</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="contact-grid">
+    <a href="mailto:vigneshksvb@gmail.com" class="contact-card">
+      <div class="c-ico">✉️</div>
+      <div><div class="c-lbl">Email</div><div class="c-val">vigneshksvb@gmail.com</div></div>
+    </a>
+    <a href="tel:+919626886501" class="contact-card">
+      <div class="c-ico">📞</div>
+      <div><div class="c-lbl">Phone</div><div class="c-val">+91 96268 86501</div></div>
+    </a>
+    <a href="https://sites.google.com/view/vignesh-portfolio-2024" target="_blank" class="contact-card">
+      <div class="c-ico">🌐</div>
+      <div><div class="c-lbl">Portfolio</div><div class="c-val">View Portfolio →</div></div>
+    </a>
+    <div class="contact-card">
+      <div class="c-ico">📍</div>
+      <div><div class="c-lbl">Location</div><div class="c-val">Chennai, India</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">VK.</div>
+  <div class="f-copy">© 2025 Vignesh Kumar · Built for GitHub Pages</div>
+  <div class="f-tags">UNITY · VR · AR · XR</div>
+</footer>
+
+</body>
+</html>
