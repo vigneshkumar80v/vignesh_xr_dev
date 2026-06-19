@@ -30,7 +30,6 @@
       overflow-x: hidden;
     }
 
-    /* Background grid */
     body::before {
       content: '';
       position: fixed;
@@ -43,7 +42,6 @@
       z-index: 0;
     }
 
-    /* Ambient orbs */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -55,7 +53,6 @@
     .orb2 { width: 400px; height: 400px; background: rgba(123,95,255,0.08); bottom: 10%; right: -100px; }
     .orb3 { width: 300px; height: 300px; background: rgba(255,78,205,0.06); top: 50%; left: 40%; }
 
-    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -94,7 +91,6 @@
 
     .nav-links a:hover { color: var(--accent); }
 
-    /* HERO */
     .hero {
       position: relative;
       z-index: 1;
@@ -197,7 +193,6 @@
       color: var(--accent);
     }
 
-    /* STATS BAR */
     .stats-bar {
       position: relative;
       z-index: 1;
@@ -232,7 +227,6 @@
       margin-top: 4px;
     }
 
-    /* SECTIONS */
     section {
       position: relative;
       z-index: 1;
@@ -265,7 +259,6 @@
       background: var(--border);
     }
 
-    /* SKILLS */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -313,7 +306,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* PROJECTS */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -448,7 +440,12 @@
 
     .project-link:hover { gap: 14px; }
 
-    /* EXPERIENCE */
+    .project-links-row {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
     .exp-list { display: flex; flex-direction: column; gap: 2px; }
 
     .exp-item {
@@ -517,7 +514,6 @@
       color: var(--accent);
     }
 
-    /* CONTACT */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -557,7 +553,6 @@
       color: var(--accent);
     }
 
-    /* FOOTER */
     footer {
       position: relative;
       z-index: 1;
@@ -573,15 +568,14 @@
       color: var(--muted);
     }
 
-    /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .reveal {
-      opacity: 0;
-      transform: translateY(30px);
+      opacity: 1;
+      transform: translateY(0);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
@@ -590,7 +584,6 @@
       transform: translateY(0);
     }
 
-    /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
@@ -611,7 +604,6 @@
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
 
-  <!-- NAV -->
   <nav>
     <span class="nav-logo">VK</span>
     <ul class="nav-links">
@@ -622,7 +614,6 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
       <span class="hero-tag">Available for new opportunities</span>
@@ -643,14 +634,13 @@
     </div>
   </section>
 
-  <!-- STATS -->
   <div class="stats-bar">
     <div class="stat-item reveal">
       <span class="stat-num">3+</span>
       <span class="stat-label">Years Experience</span>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num">10+</span>
+      <span class="stat-num">12+</span>
       <span class="stat-label">VR/AR Projects</span>
     </div>
     <div class="stat-item reveal">
@@ -663,7 +653,6 @@
     </div>
   </div>
 
-  <!-- SKILLS -->
   <section id="skills">
     <div class="section-header reveal">
       <span class="section-num">01</span>
@@ -720,7 +709,6 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects" style="background: rgba(15,23,38,0.5);">
     <div class="section-header reveal">
       <span class="section-num">02</span>
@@ -728,149 +716,13 @@
       <div class="section-line"></div>
     </div>
 
-    <!--
-      ============================================================
-      HOW TO ADD YOUR YOUTUBE VIDEOS:
-      1. Find the YouTube video ID (the part after ?v= in the URL)
-         Example: https://youtu.be/XXXXXXXXXXX → ID is XXXXXXXXXXX
-      2. Replace the src in the <iframe> OR use a thumbnail img:
-         <img class="yt-thumb" src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg">
-      3. Update the href on the project-link anchor to the full YouTube URL
-      4. Update project name, description, platform, and tech chips
-      ============================================================
-    -->
-
     <div class="projects-grid">
 
-      <!-- PROJECT 1: VR Human Anatomy -->
       <div class="project-card reveal">
         <div class="project-thumb">
-          <!-- REPLACE VIDEO_ID_1 with actual YouTube video ID -->
-          <img class="yt-thumb" src="https://img.youtube.com/vi/VIDEO_ID_1/maxresdefault.jpg" alt="VR Human Anatomy" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🫀</div>'"/>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_1" target="_blank" class="project-overlay">
-            <div class="play-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </a>
-          <span class="project-badge">Meta Horizon</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Medical Education · VR</p>
-          <h3 class="project-name">VR Human Anatomy</h3>
-          <p class="project-desc">
-            Interactive 3D anatomy exploration application published on Meta Horizon.
-            Enables detailed anatomical study with immersive visualization of organs,
-            systems, and structures in virtual reality.
-          </p>
-          <div class="project-tech">
-            <span class="tech-chip">Unity 3D</span>
-            <span class="tech-chip">Meta XR SDK</span>
-            <span class="tech-chip">Quest 2/3</span>
-            <span class="tech-chip">C#</span>
-          </div>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_1" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
-      </div>
-
-      <!-- PROJECT 2: Cataract Surgery PC VR -->
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <!-- REPLACE VIDEO_ID_2 with actual YouTube video ID -->
-          <img class="yt-thumb" src="https://img.youtube.com/vi/VIDEO_ID_2/maxresdefault.jpg" alt="Cataract Surgery VR" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🔬</div>'"/>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_2" target="_blank" class="project-overlay">
-            <div class="play-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </a>
-          <span class="project-badge">Surgical Sim</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Medical Simulation · PC VR</p>
-          <h3 class="project-name">Cataract Surgery Simulator</h3>
-          <p class="project-desc">
-            High-fidelity surgical simulation with realistic procedural environments,
-            step-by-step surgical UI workflows, and OneTouch haptic pen integration
-            for authentic tactile tool feedback.
-          </p>
-          <div class="project-tech">
-            <span class="tech-chip">Unity 3D</span>
-            <span class="tech-chip">SOFA Physics</span>
-            <span class="tech-chip">PC VR</span>
-            <span class="tech-chip">Haptic Pen</span>
-          </div>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_2" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
-      </div>
-
-      <!-- PROJECT 3: Career Arcade -->
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <!-- REPLACE VIDEO_ID_3 with actual YouTube video ID -->
-          <img class="yt-thumb" src="https://img.youtube.com/vi/VIDEO_ID_3/maxresdefault.jpg" alt="Career Arcade" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🎓</div>'"/>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_3" target="_blank" class="project-overlay">
-            <div class="play-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </a>
-          <span class="project-badge">Education</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">EdTech · Mobile</p>
-          <h3 class="project-name">Career Arcade</h3>
-          <p class="project-desc">
-            Educational platform integrating Firebase authentication (Email & Google Sign-In)
-            with multiple 2D & 3D career-exploration games embedded in a unified
-            interactive 3D environment.
-          </p>
-          <div class="project-tech">
-            <span class="tech-chip">Unity 3D</span>
-            <span class="tech-chip">Firebase</span>
-            <span class="tech-chip">Google Auth</span>
-            <span class="tech-chip">C#</span>
-          </div>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_3" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
-      </div>
-
-      <!-- PROJECT 4: GoClubbing VR -->
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <!-- REPLACE VIDEO_ID_4 with actual YouTube video ID -->
-          <img class="yt-thumb" src="https://img.youtube.com/vi/VIDEO_ID_4/maxresdefault.jpg" alt="GoClubbing VR" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🎵</div>'"/>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_4" target="_blank" class="project-overlay">
-            <div class="play-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </a>
-          <span class="project-badge">Social VR</span>
-        </div>
-        <div class="project-body">
-          <p class="project-platform">Social · Multiplayer VR</p>
-          <h3 class="project-name">GoClubbing VR</h3>
-          <p class="project-desc">
-            Multiplayer social VR nightclub experience for Meta Quest. Optimized
-            networking via Photon PUN, resolved multiplayer sync issues, and
-            improved overall performance for a seamless social experience.
-          </p>
-          <div class="project-tech">
-            <span class="tech-chip">Photon PUN</span>
-            <span class="tech-chip">Meta Quest</span>
-            <span class="tech-chip">Unity 3D</span>
-            <span class="tech-chip">VR Optimization</span>
-          </div>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_4" target="_blank" class="project-link">Watch Demo →</a>
-        </div>
-      </div>
-
-      <!-- PROJECT 5: VR Tour (AMTZ / GT Holiday) -->
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <!-- REPLACE VIDEO_ID_5 with actual YouTube video ID -->
-          <img class="yt-thumb" src="https://img.youtube.com/vi/VIDEO_ID_5/maxresdefault.jpg" alt="VR Tour" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🌍</div>'"/>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_5" target="_blank" class="project-overlay">
-            <div class="play-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
+          <img class="yt-thumb" src="https://img.youtube.com/vi/cDP6h1d-rZ4/maxresdefault.jpg" alt="VR Tour AMTZ GT Holiday" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🌍</div>'"/>
+          <a href="https://youtu.be/cDP6h1d-rZ4" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </a>
           <span class="project-badge">Enterprise</span>
         </div>
@@ -888,44 +740,303 @@
             <span class="tech-chip">Meta Quest</span>
             <span class="tech-chip">XR Interaction Toolkit</span>
           </div>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_5" target="_blank" class="project-link">Watch Demo →</a>
+          <div class="project-links-row">
+            <a href="https://youtu.be/cDP6h1d-rZ4" target="_blank" class="project-link">Demo 1 →</a>
+            <a href="https://youtu.be/h1WaccYXAgY" target="_blank" class="project-link">Demo 2 →</a>
+          </div>
         </div>
       </div>
 
-      <!-- PROJECT 6: Sprintverse / AR Hair -->
       <div class="project-card reveal">
         <div class="project-thumb">
-          <!-- REPLACE VIDEO_ID_6 with actual YouTube video ID -->
-          <img class="yt-thumb" src="https://img.youtube.com/vi/VIDEO_ID_6/maxresdefault.jpg" alt="Sprintverse" onerror="this.parentElement.innerHTML='<div class=\'yt-placeholder\'>🏃</div>'"/>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_6" target="_blank" class="project-overlay">
-            <div class="play-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
+          <img class="yt-thumb" src="https://img.youtube.com/vi/ysoC_1R107c/maxresdefault.jpg" alt="VR Human Anatomy" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🫀</div>'"/>
+          <a href="https://youtu.be/ysoC_1R107c" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Meta Horizon</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Medical Education · VR</p>
+          <h3 class="project-name">VR Human Anatomy</h3>
+          <p class="project-desc">
+            Interactive 3D anatomy exploration application published on Meta Horizon.
+            Enables detailed anatomical study with immersive visualization of organs,
+            systems, and structures in virtual reality.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">Meta XR SDK</span>
+            <span class="tech-chip">Quest 2/3</span>
+            <span class="tech-chip">C#</span>
+          </div>
+          <a href="https://youtu.be/ysoC_1R107c" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/12oD_FEj2sc/maxresdefault.jpg" alt="Running Therapy Game" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🏃</div>'"/>
+          <a href="https://youtu.be/12oD_FEj2sc" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Physiotherapy</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Health & Rehabilitation · 3D</p>
+          <h3 class="project-name">Running Therapy Game</h3>
+          <p class="project-desc">
+            3D running game built for hand physiotherapy. Players collect coins,
+            dodge obstacles, and beat the clock — designed to improve hand movement
+            and coordination during rehabilitation.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">C#</span>
+            <span class="tech-chip">Physiotherapy</span>
+            <span class="tech-chip">Game Design</span>
+          </div>
+          <a href="https://youtu.be/12oD_FEj2sc" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/3hQfP1_pw-Y/maxresdefault.jpg" alt="Egg Catcher Game" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🥚</div>'"/>
+          <a href="https://youtu.be/3hQfP1_pw-Y" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Physiotherapy</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Health & Rehabilitation · 2D</p>
+          <h3 class="project-name">Egg Catcher Game</h3>
+          <p class="project-desc">
+            2D egg catcher game built for physiotherapy training. Players catch falling
+            eggs to build hand-eye coordination and fine motor control, purpose-built
+            for motor skill rehabilitation.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 2D</span>
+            <span class="tech-chip">C#</span>
+            <span class="tech-chip">Physiotherapy</span>
+            <span class="tech-chip">Motor Skills</span>
+          </div>
+          <a href="https://youtu.be/3hQfP1_pw-Y" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/PAvl7184VMg/maxresdefault.jpg" alt="AR Hair Styling" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>💇</div>'"/>
+          <a href="https://youtube.com/shorts/PAvl7184VMg" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Augmented Reality</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">AR · Face Tracking</p>
+          <h3 class="project-name">AR Hair Styling</h3>
+          <p class="project-desc">
+            Real-time AR hair styling app with face detection and tracking. Users can
+            dynamically apply different hairstyles and change hair color, style, and
+            length at runtime for an instant AR preview of different looks.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">AR Foundation</span>
+            <span class="tech-chip">Face Tracking</span>
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">C#</span>
+          </div>
+          <a href="https://youtube.com/shorts/PAvl7184VMg" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/HNaw01XSbBg/maxresdefault.jpg" alt="VR Architecture Walkthrough" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🏛️</div>'"/>
+          <a href="https://youtu.be/HNaw01XSbBg" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Architecture</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Architecture · Unity VR</p>
+          <h3 class="project-name">VR Architecture Walkthrough</h3>
+          <p class="project-desc">
+            Immersive VR walkthrough with runtime wall color customization and dynamic
+            floor tile changes — letting clients visualize and personalize spaces
+            interactively in real time.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">VR</span>
+            <span class="tech-chip">Runtime Customization</span>
+            <span class="tech-chip">XR Interaction Toolkit</span>
+          </div>
+          <a href="https://youtu.be/HNaw01XSbBg" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/yH4irmYxlm0/maxresdefault.jpg" alt="Multiplayer 3D Game" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🎮</div>'"/>
+          <a href="https://youtu.be/yH4irmYxlm0" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </a>
           <span class="project-badge">Multiplayer</span>
         </div>
         <div class="project-body">
-          <p class="project-platform">Gaming · Android</p>
-          <h3 class="project-name">Sprintverse</h3>
+          <p class="project-platform">Gaming · Unity 3D</p>
+          <h3 class="project-name">Multiplayer 3D Game</h3>
           <p class="project-desc">
-            Competitive multiplayer Android running game using Photon networking for
-            real-time synchronization and Firebase authentication for player accounts
-            and leaderboards.
+            Real-time multiplayer 3D game with Firebase authentication, customizable
+            Ready Player Me avatars, and live multiplayer interaction via Photon
+            Networking.
           </p>
           <div class="project-tech">
             <span class="tech-chip">Photon PUN</span>
-            <span class="tech-chip">Firebase</span>
-            <span class="tech-chip">Android</span>
+            <span class="tech-chip">Firebase Auth</span>
+            <span class="tech-chip">Ready Player Me</span>
             <span class="tech-chip">Unity 3D</span>
           </div>
-          <a href="https://www.youtube.com/watch?v=VIDEO_ID_6" target="_blank" class="project-link">Watch Demo →</a>
+          <a href="https://youtu.be/yH4irmYxlm0" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/eu-pVW8QC0o/maxresdefault.jpg" alt="GoClubbing VR" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🎵</div>'"/>
+          <a href="https://youtube.com/shorts/eu-pVW8QC0o" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Social VR</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Social · Multiplayer VR</p>
+          <h3 class="project-name">GoClubbing VR</h3>
+          <p class="project-desc">
+            Multiplayer social VR nightclub experience for Meta Quest. Optimized
+            networking via Photon PUN, resolved multiplayer sync issues, and
+            improved overall performance for a seamless social experience.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Photon PUN</span>
+            <span class="tech-chip">Meta Quest</span>
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">VR Optimization</span>
+          </div>
+          <a href="https://youtube.com/shorts/eu-pVW8QC0o" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/RJ9Zgtwitig/maxresdefault.jpg" alt="Career Arcade" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🎓</div>'"/>
+          <a href="https://youtu.be/RJ9Zgtwitig" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Education</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">EdTech · Mobile</p>
+          <h3 class="project-name">Career Arcade</h3>
+          <p class="project-desc">
+            Educational platform integrating Firebase authentication (Email & Google Sign-In)
+            with multiple 2D & 3D career-exploration games embedded in a unified
+            interactive 3D environment.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">Firebase</span>
+            <span class="tech-chip">Google Auth</span>
+            <span class="tech-chip">C#</span>
+          </div>
+          <a href="https://youtu.be/RJ9Zgtwitig" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/esBBP1x383s/maxresdefault.jpg" alt="Cataract Surgery Simulator" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🔬</div>'"/>
+          <a href="https://youtube.com/shorts/esBBP1x383s" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Surgical Sim</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Medical Simulation · PC VR</p>
+          <h3 class="project-name">Cataract Surgery Simulator</h3>
+          <p class="project-desc">
+            High-fidelity surgical simulation with realistic procedural environments,
+            step-by-step surgical UI workflows, and OneTouch haptic pen integration
+            for authentic tactile tool feedback.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">SOFA Physics</span>
+            <span class="tech-chip">PC VR</span>
+            <span class="tech-chip">Haptic Pen</span>
+          </div>
+          <a href="https://youtube.com/shorts/esBBP1x383s" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/aWLbr6I7TNo/maxresdefault.jpg" alt="VR Fire Safety Training" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🔥</div>'"/>
+          <a href="https://youtu.be/aWLbr6I7TNo" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">Safety Training</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Industrial Training · VR</p>
+          <h3 class="project-name">VR Fire Safety Training</h3>
+          <p class="project-desc">
+            VR fire safety training simulation set in an office environment for Meta Quest 3.
+            Guides users through a sequential emergency-response scenario — locate the fire,
+            activate the alarm, grab the extinguisher, and put out the fire — with real-time
+            scoring and task tracking.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 6</span>
+            <span class="tech-chip">OpenXR</span>
+            <span class="tech-chip">XR Interaction Toolkit</span>
+            <span class="tech-chip">Meta Quest 3</span>
+          </div>
+          <a href="https://youtu.be/aWLbr6I7TNo" target="_blank" class="project-link">Watch Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/Ol5ycmCz-IM/maxresdefault.jpg" alt="VR Molecular Learning" onerror="this.parentElement.innerHTML='<div class=&quot;yt-placeholder&quot;>🧬</div>'"/>
+          <a href="https://youtu.be/Ol5ycmCz-IM" target="_blank" class="project-overlay">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </a>
+          <span class="project-badge">STEM Education</span>
+        </div>
+        <div class="project-body">
+          <p class="project-platform">Science Education · VR</p>
+          <h3 class="project-name">VR Molecular Learning</h3>
+          <p class="project-desc">
+            Interactive VR application for exploring molecular structures in 3D space.
+            Lets students examine, rotate, and manipulate molecules at scale — making
+            abstract chemistry concepts tangible through immersive visualization.
+          </p>
+          <div class="project-tech">
+            <span class="tech-chip">Unity 3D</span>
+            <span class="tech-chip">VR</span>
+            <span class="tech-chip">Education</span>
+            <span class="tech-chip">C#</span>
+          </div>
+          <a href="https://youtu.be/Ol5ycmCz-IM" target="_blank" class="project-link">Watch Demo →</a>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
   <section id="experience">
     <div class="section-header reveal">
       <span class="section-num">03</span>
@@ -971,7 +1082,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact" style="background: rgba(15,23,38,0.5);">
     <div class="section-header reveal">
       <span class="section-num">04</span>
@@ -1002,14 +1112,12 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2025 Vignesh Kumar. Built for GitHub Pages.</p>
     <p style="color: var(--accent); font-size: 0.65rem; letter-spacing: 0.1em;">UNITY 3D · VR · AR · XR</p>
   </footer>
 
   <script>
-    // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
